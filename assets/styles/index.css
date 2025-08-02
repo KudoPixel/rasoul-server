@@ -1,0 +1,180 @@
+/* --- Custom Properties for Theming --- */
+:root {
+  --bg-dark: #111827; /* Dark Gray */
+  --bg-medium: #1f2937; /* Medium Gray */
+  --primary: #a855f7; /* Vibrant Purple */
+  --secondary: #22c55e; /* Bright Green */
+  --accent: #f97316; /* Bright Orange */
+}
+
+/* --- Font Setup --- */
+body {
+  font-family: "Vazirmatn", sans-serif;
+  scroll-behavior: smooth;
+  background-color: var(--bg-dark);
+  color: #e5e7eb;
+}
+/* This class is ONLY for English/Latin character headings */
+.font-game {
+  font-family: "Press Start 2P", cursive;
+}
+
+/* --- Minecraft-style UI Elements --- */
+.mc-button {
+  border: 4px solid #000;
+  box-shadow: inset -4px -4px 0px 0px rgba(0, 0, 0, 0.4);
+  transition: all 0.1s ease-in-out;
+}
+.mc-button:hover {
+  transform: translateY(2px);
+  box-shadow: inset -2px -2px 0px 0px rgba(0, 0, 0, 0.4);
+}
+.mc-button:active {
+  transform: translateY(4px);
+  box-shadow: inset 0px 0px 0px 0px rgba(0, 0, 0, 0.4);
+}
+.pixel-border {
+  border: 8px solid;
+  border-image-slice: 2;
+  border-image-width: 4px;
+  border-image-repeat: stretch;
+  border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 0h1v1h1v1h1v1H4V2H3V1H2V0zM0 2h1v1h1v1h1v1H2V4H1V3H0V2z" fill="rgb(100,100,100)" /></svg>');
+  border-image-outset: 2px;
+}
+
+/* --- Animations --- */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@keyframes jump-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-50px);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.05) translateY(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-jump-in {
+  animation: jump-in 0.5s ease-out forwards;
+}
+
+/* --- Custom Tooltip for Copy Feedback --- */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: var(--secondary);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tooltip.active .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* --- Donation Card Hover Effect --- */
+.donate-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.donate-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3),
+    0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Donation Modal --- */
+#donate-modal.hidden {
+  display: none;
+}
+
+/* --- YouTube Video Responsive --- */
+.video-container-16-9 {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  background: #000;
+}
+.video-container-16-9 iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.video-container-short {
+  position: relative;
+  width: 100%;
+  max-width: 320px; /* Typical phone width */
+  margin: auto;
+  aspect-ratio: 9 / 16;
+  background: #000;
+}
+.video-container-short iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#hero {
+  position: relative;
+  /* z-index: -1; */
+}
+
+#hero::before {
+  display: block;
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(2px);
+}
+
+/* --- NEW: Creative Info Block Style --- */
+.info-block {
+  @apply bg-gray-700 p-3 rounded-lg cursor-pointer flex justify-between items-center gap-4 text-lg font-mono transition-colors hover:bg-gray-600;
+}
+
+.info-block-text-label {
+  @apply font-bold text-gray-400 text-base;
+}
+
+.info-block-text {
+  @apply text-green-400 truncate;
+}
+
+.info-block-icon {
+  @apply text-gray-400 flex-shrink-0;
+}
+
+/* --- UPDATED: Server Info block uses info-block styles --- */
+#copyIpBtnInfo.info-block .info-block-text {
+  @apply text-purple-400 text-center w-full;
+}
