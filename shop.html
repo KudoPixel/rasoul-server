@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<!--
+  BighanoonAbad - The Glass UI Shop
+  Version: 2.0.0
+  Description: A complete redesign of the shop with a modern, gaming-focused, "glassmorphism" UI.
+               Inspired by the original site's theme, with multiple new, creative sections.
+               All HTML, CSS, and JavaScript are in this single file for simplicity.
+-->
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>خزانه | بی‌قانون آباد</title>
+
+    <!-- SEO & Meta Tags -->
+    <meta name="description" content="وارد خزانه بی‌قانون آباد شوید. یک فروشگاه مدرن و هیجان‌انگیز برای تهیه رنک‌ها و آیتم‌های ویژه سرور." />
+    <meta name="keywords" content="فروشگاه ماین کرفت, بی‌قانون آباد, رنک ماین کرفت, آیتم ماین کرفت, رابط کاربری شیشه‌ای, glassmorphism" />
+    <link rel="icon" type="image/png" href="https://placehold.co/32x32/a855f7/ffffff?text=💎" /> <!-- Placeholder Diamond Icon -->
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+    <style>
+        /*
+        =====================================================================
+        == CUSTOM STYLES FOR GLASS UI & GAMING THEME
+        =====================================================================
+        This section contains all custom CSS for the glassmorphism effect,
+        animations, and unique gaming-style components.
+        */
+
+        /* --- [Improvement] Global Theming & Fonts --- */
+        :root {
+            --bg-dark: #0d0c1d;      /* A deeper, more vibrant dark blue/purple */
+            --primary: #a855f7;     /* Vibrant Purple */
+            --secondary: #22c55e;   /* Bright Green */
+            --accent: #f97316;      /* Bright Orange */
+            --cyan-glow: #00f6ff;
+        }
+
+        body {
+            font-family: "Vazirmatn", sans-serif;
+            background-color: var(--bg-dark);
+            color: #e5e7eb;
+            overflow-x: hidden; /* Prevents horizontal scroll from animations */
+        }
+
+        .font-game {
+            font-family: "Press Start 2P", cursive;
+        }
+
+        /* --- [New] Animated Background --- */
+        #main-container {
+            position: relative;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png'), 
+                              radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.2), transparent 40%),
+                              radial-gradient(circle at 80% 70%, rgba(0, 246, 255, 0.15), transparent 40%);
+            background-attachment: fixed;
+            overflow: hidden;
+        }
+
+        /* --- [New] Glassmorphism Card Style --- */
+        .glass-card {
+            background: rgba(23, 22, 40, 0.4); /* Semi-transparent background */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.25rem; /* 20px */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- [New] Glow effect on hover --- */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, transparent, var(--glow-color, var(--primary)));
+            filter: blur(40px);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .glass-card:hover::before {
+            opacity: 0.2;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- [New] Category Navigation Crystals --- */
+        .category-crystal {
+            background: rgba(23, 22, 40, 0.5);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .category-crystal:hover {
+            background: rgba(168, 85, 247, 0.3);
+            border-color: var(--primary);
+            transform: scale(1.1);
+            text-shadow: 0 0 10px var(--primary);
+        }
+        
+        .category-crystal.active {
+             background: rgba(168, 85, 247, 0.5);
+             border-color: var(--primary);
+             box-shadow: 0 0 20px var(--primary);
+             transform: scale(1.1);
+        }
+
+        /* --- [New] Modern Gaming Button --- */
+        .modern-button {
+            background: linear-gradient(45deg, var(--primary), var(--cyan-glow));
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+        }
+        .modern-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.8);
+        }
+        
+        /* --- [New] Section Title Styling --- */
+        .section-title {
+            text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+        }
+        
+        /* --- [New] Animation for fade-in effect on scroll --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="main-container">
+        <!-- 
+          Header Section
+          A simplified header for the shop page, keeping the brand identity.
+        -->
+        <header class="sticky top-0 z-50 bg-black/30 backdrop-blur-xl border-b border-white/10">
+            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <a href="#" class="text-2xl font-game text-purple-400 drop-shadow-[2px_2px_0_#000]" dir="ltr">
+                    BighanoonAbad
+                </a>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <a href="#" class="font-bold hover:text-purple-400 transition-colors">صفحه اصلی</a>
+                    <a href="#" class="font-bold text-green-400 hover:text-green-300 transition-colors">خزانه</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="container mx-auto px-4 py-16 sm:py-24">
+            
+            <!-- 
+              Hero Section
+              An impactful introduction to the shop with a title and subtitle.
+            -->
+            <section class="text-center mb-24 fade-in">
+                <h1 class="text-5xl md:text-7xl font-black text-white section-title leading-tight">
+                    خزانه بی‌قانون آباد
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mt-4 max-w-2xl mx-auto">
+                    جایی که افسانه‌ها ساخته می‌شوند. بهترین رنک‌ها و آیتم‌های کمیاب را برای ماجراجویی خود به دست آورید.
+                </p>
+            </section>
+
+            <!-- 
+              Category Navigation Section
+              Interactive "crystal" buttons to filter shop items.
+            -->
+            <section class="mb-20 fade-in">
+                <div id="category-nav" class="flex items-center justify-center gap-4 sm:gap-8">
+                    <button data-category="all" class="category-crystal active w-28 h-32 sm:w-36 sm:h-40 font-bold text-lg">
+                        همه
+                    </button>
+                    <button data-category="ranks" class="category-crystal w-28 h-32 sm:w-36 sm:h-40 font-bold text-lg">
+                        رنک‌ها
+                    </button>
+                    <button data-category="keys" class="category-crystal w-28 h-32 sm:w-36 sm:h-40 font-bold text-lg">
+                        کلیدها
+                    </button>
+                    <button data-category="cosmetics" class="category-crystal w-28 h-32 sm:w-36 sm:h-40 font-bold text-lg">
+                        تزئینی
+                    </button>
+                </div>
+            </section>
+
+            <!-- 
+              Products Grid Section
+              This is where all the shop items are displayed as glass cards.
+            -->
+            <section id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+                <!-- Product cards will be dynamically inserted here by JavaScript -->
+            </section>
+
+        </main>
+
+        <!-- 
+          Footer Section
+          A simple footer with credits.
+        -->
+        <footer class="bg-black/20 mt-24 py-8 border-t border-white/10">
+            <div class="container mx-auto px-6 text-center text-gray-400">
+                <p>با عشق و بلوک ساخته شده برای بی‌قانون آباد</p>
+                <p class="mt-2 text-sm" style="direction: ltr">
+                    &copy; 2024 - BighanoonAbad. All rights reserved... or are they?
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // =====================================================================
+        // == INTERACTIVE SHOP LOGIC
+        // =====================================================================
+
+        // --- Shop Data (Front-end Database) ---
+        const shopData = {
+            'ranks': [
+                { id: 'vip', name: 'رنک VIP', price: '۵۰,۰۰۰ تومان', rarity: 'rare', description: 'شروعی برای خاص بودن با یک تگ زیبا.', glowColor: '#3b82f6', image: 'https://placehold.co/100x100/3b82f6/ffffff?text=VIP' },
+                { id: 'mvp', name: 'رنک MVP', price: '۱۰۰,۰۰۰ تومان', rarity: 'epic', description: 'برای بازیکنان ارزشمند با امکانات بیشتر.', glowColor: '#a855f7', image: 'https://placehold.co/100x100/a855f7/ffffff?text=MVP' },
+                { id: 'hero', name: 'رنک Hero', price: '۲۰۰,۰۰۰ تومان', rarity: 'legendary', description: 'فقط قهرمانان واقعی این رنک را دارند.', glowColor: '#f97316', image: 'https://placehold.co/100x100/f97316/ffffff?text=HERO' }
+            ],
+            'keys': [
+                { id: 'common_key', name: 'کلید معمولی', price: '۱۵,۰۰۰ تومان', rarity: 'common', description: 'یک شانس برای آیتم‌های معمولی اما کاربردی.', glowColor: '#9ca3af', image: 'https://placehold.co/100x100/9ca3af/ffffff?text=🗝️' },
+                { id: 'rare_key', name: 'کلید کمیاب', price: '۳۵,۰۰۰ تومان', rarity: 'rare', description: 'شانس خود را برای آیتم‌های بهتر امتحان کن.', glowColor: '#3b82f6', image: 'https://placehold.co/100x100/3b82f6/ffffff?text=🗝️' },
+                { id: 'epic_key', name: 'کلید حماسی', price: '۷۰,۰۰۰ تومان', rarity: 'epic', description: 'این صندوقچه حاوی غنائم ویژه‌ای است.', glowColor: '#a855f7', image: 'https://placehold.co/100x100/a855f7/ffffff?text=🗝️' }
+            ],
+            'cosmetics': [
+                { id: 'fire_particles', name: 'افکت آتشین', price: '۴۰,۰۰۰ تومان', rarity: 'rare', description: 'هرجا قدم می‌گذاری، ذرات آتشین به دنبالت می‌آیند.', glowColor: '#ef4444', image: 'https://placehold.co/100x100/ef4444/ffffff?text=🔥' },
+                { id: 'ender_aura', name: 'هاله اندرمن', price: '۶۰,۰۰۰ تومان', rarity: 'epic', description: 'با یک هاله بنفش مرموز، همه را مجذوب خود کن.', glowColor: '#a855f7', image: 'https://placehold.co/100x100/a855f7/ffffff?text=🔮' },
+                { id: 'angel_wings', name: 'بال‌های فرشته', price: '۹۰,۰۰۰ تومان', rarity: 'legendary', description: 'بال‌های تزئینی برای پرواز در لابی.', glowColor: '#facc15', image: 'https://placehold.co/100x100/facc15/ffffff?text=🕊️' }
+            ]
+        };
+
+        const productsGrid = document.getElementById('products-grid');
+        const categoryNav = document.getElementById('category-nav');
+
+        /**
+         * Renders product cards to the grid.
+         * @param {string} category - The category to display. 'all' shows everything.
+         */
+        function renderProducts(category = 'all') {
+            productsGrid.innerHTML = ''; // Clear existing products
+            
+            const itemsToRender = [];
+            if (category === 'all') {
+                // Combine all categories into one array
+                Object.values(shopData).forEach(catItems => {
+                    itemsToRender.push(...catItems);
+                });
+            } else if (shopData[category]) {
+                itemsToRender.push(...shopData[category]);
+            }
+
+            itemsToRender.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glass-card flex flex-col items-center text-center p-8 fade-in';
+                card.dataset.category = Object.keys(shopData).find(key => shopData[key].includes(item));
+                card.style.setProperty('--glow-color', item.glowColor);
+
+                card.innerHTML = `
+                    <div class="mb-4">
+                        <img src="${item.image}" alt="${item.name}" class="w-24 h-24 rounded-full object-cover">
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">${item.name}</h3>
+                    <p class="text-gray-400 mb-6 flex-grow">${item.description}</p>
+                    <div class="w-full">
+                        <p class="text-3xl font-bold text-white mb-6">${item.price}</p>
+                        <button class="modern-button w-full text-white font-bold py-3 px-6 rounded-lg text-lg">
+                            خرید
+                        </button>
+                    </div>
+                `;
+                productsGrid.appendChild(card);
+            });
+            
+            // Re-trigger the fade-in animation for the new cards
+            observeFadeInElements();
+        }
+
+        /**
+         * Handles category navigation clicks.
+         */
+        categoryNav.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                const category = e.target.dataset.category;
+                
+                // Update active class on buttons
+                categoryNav.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                renderProducts(category);
+            }
+        });
+        
+        /**
+         * Sets up an IntersectionObserver to trigger fade-in animations on scroll.
+         */
+        function observeFadeInElements() {
+            const fadeInElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Optional: stop observing once visible
+                    }
+                });
+            }, {
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+
+            fadeInElements.forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // --- Initial Load --- 
+        renderProducts('all'); // Render all products on initial load
+        observeFadeInElements(); // Initial call for elements already in view
+
+    });
+    </script>
+
+</body>
+</html>
